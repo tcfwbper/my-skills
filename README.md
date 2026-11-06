@@ -9,7 +9,8 @@ Agent skills for shipping code in a shared repo, distilled from [mattpocock/skil
 cat operating-rules.md >> ~/.claude/CLAUDE.md     # Claude Code
 cat operating-rules.md >> ~/.codex/AGENTS.md      # Codex
 
-# 2. link the skills into ~/.claude/skills and ~/.agents/skills
+# 2. link the skills into each installed harness: ~/.claude/skills if `claude` is found,
+#    ~/.agents/skills if `codex` is found (each is independent; a missing one is skipped)
 #    (re-run after git pull if skills were added or renamed)
 ./link.sh
 
