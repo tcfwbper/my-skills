@@ -1,0 +1,5 @@
+interface:
+  display_name: "Study Issue"
+  short_description: "Brief an issue: problem, scale, approach, outcome, status"
+policy:
+  allow_implicit_invocation: false
