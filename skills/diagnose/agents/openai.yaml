@@ -1,0 +1,3 @@
+interface:
+  display_name: "Diagnose"
+  short_description: "Locate, reproduce, and root-cause an unknown issue, then plan the fix"

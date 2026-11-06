@@ -1,0 +1,5 @@
+interface:
+  display_name: "Diagnose (zh-TW)"
+  short_description: "Diagnose an unknown issue in Traditional Chinese, terms in English"
+policy:
+  allow_implicit_invocation: false

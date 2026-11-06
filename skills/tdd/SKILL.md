@@ -19,9 +19,9 @@ See [tests.md](tests.md) for examples and [mocking.md](mocking.md) for mocking g
 
 A **seam** is the public boundary you test at: the interface where you observe behavior without reaching inside. Tests live at seams, never against internals.
 
-**Test only at pre-agreed seams.** Before writing any test, write down the seams under test and confirm them with the user. No test is written at an unconfirmed seam. You can't test everything, so agreeing the seams up front is how testing effort lands on the critical paths and complex logic instead of every edge case.
+**Test only at pre-agreed seams.** Before writing any test, write down the seams under test, each with a one-line note on what it catches and what it misses. You can't test everything, so agreeing the seams up front is how testing effort lands on the critical paths and complex logic instead of every edge case.
 
-Ask: "What's the public interface, and which seams should we test?" Give each proposed seam a one-line note on what it catches and what it misses.
+Take the seams from the issue or sub-issue being built when it states its testing approach or acceptance criteria, and from the calling skill's brief; those seams are already agreed. Only when neither settles them, ask the user: "What's the public interface, and which seams should we test?" No test is written at a seam that is neither stated nor confirmed.
 
 When the shape of that interface is itself in question, prefer the deeper module: a small interface hiding a lot of behaviour, placed at a seam something actually varies across. Match the surrounding package's naming, structure, and error handling rather than introducing a new pattern.
 
@@ -36,4 +36,4 @@ When the shape of that interface is itself in question, prefer the deeper module
 
 - **Red before green.** Write the failing test first, then only enough code to pass it. Don't anticipate future tests or add speculative features.
 - **One slice at a time.** One seam, one test, one minimal implementation per cycle.
-- **Refactoring is not part of the loop.** It belongs to the review stage (see the `code-review` skill), not the red → green implementation cycle.
+- **Refactoring is not part of the loop.** It belongs to the review stage (see the `code-review-local` skill), not the red → green implementation cycle.
