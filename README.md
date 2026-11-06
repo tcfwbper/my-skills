@@ -23,7 +23,8 @@ Skills are invoked the same way in every harness: type `/<name>`, or let the age
 ## The flow
 
 ```
-/study-issue  ->  /diagnose (unknown cause)  ->  /implement (per sub-issue)  ->  /code-review-local  ->  push, PR
+/grill-me  ->  /to-spec  ->  /write-issue  ->  /implement (per sub-issue)  ->  /code-review-local  ->  push, PR
+/study-issue  ->  /diagnose (unknown cause)
 /code-review-pr   (someone else's PR)
 ```
 
@@ -31,6 +32,10 @@ Start a fresh window for each `/implement`. `implement` calls `tdd` and `code-re
 
 | Skill | You type it | Agent fires it | What it does |
 | --- | --- | --- | --- |
+| [grill-me](skills/grill-me/SKILL.md) | yes | | Interviews you in rounds over a design tree until every decision is settled, with a recommended answer for each question. Writes nothing. |
+| [grill-me-zh-tw](skills/grill-me-zh-tw/SKILL.md) | yes | | Same as `grill-me`, with the interview in Traditional Chinese and technical terms kept in English. |
+| [to-spec](skills/to-spec/SKILL.md) | yes | | Synthesizes the conversation into a spec (problem, user stories, decisions, testing seams, done-when) and publishes it as a GitHub issue. No interview. |
+| [write-issue](skills/write-issue/SKILL.md) | yes | | Splits a plan into tracer-bullet tickets and publishes them in the repo's own issue structure: one main issue for the plan, one sub-issue per ticket, blocking edges set. A single ticket is a single issue. |
 | [study-issue](skills/study-issue/SKILL.md) | yes | | Reads an issue, its thread, linked PRs, and the code it touches, then briefs you: problem, scale, approach, expected outcome, and status (Triage, In-progress, Done). |
 | [study-issue-zh-tw](skills/study-issue-zh-tw/SKILL.md) | yes | | Same as `study-issue`, with the brief written in Traditional Chinese and technical terms kept in English. |
 | [code-review-pr](skills/code-review-pr/SKILL.md) | yes | | Reviews a remote PR: studies its issue first, explains how the implementation solves it, grades risks (High, Medium, Low), and lists every point a human must confirm, including sound designs with equally good or better alternatives. Read-only. |

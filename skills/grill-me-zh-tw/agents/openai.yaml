@@ -1,0 +1,5 @@
+interface:
+  display_name: "Grill Me (zh-TW)"
+  short_description: "Sharpen a plan through interview in Traditional Chinese"
+policy:
+  allow_implicit_invocation: false
