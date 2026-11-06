@@ -40,6 +40,8 @@ Keep `grill-me`, `to-spec`, and `to-tickets` in one context window. Start a fres
 | [handoff](skills/handoff/SKILL.md) | yes | | Compacts the session into a file another session can continue from, including the task contract and open checklist items. |
 | [study-issue](skills/study-issue/SKILL.md) | yes | | Reads an issue, its thread, linked PRs, and the code it touches, then briefs you: problem, scale, approach, expected outcome, and status (Triage, In-progress, Done). |
 | [study-issue-zh-tw](skills/study-issue-zh-tw/SKILL.md) | yes | | Same as `study-issue`, with the brief written in Traditional Chinese and technical terms kept in English. |
+| [code-review-pr](skills/code-review-pr/SKILL.md) | yes | | Reviews a remote PR: studies its issue first, explains how the implementation solves it, grades risks (High, Medium, Low), and lists every point a human must confirm, including sound designs with equally good or better alternatives. Read-only. |
+| [code-review-pr-zh-tw](skills/code-review-pr-zh-tw/SKILL.md) | yes | | Same as `code-review-pr`, with the brief written in Traditional Chinese and technical terms kept in English. |
 | [tdd](skills/tdd/SKILL.md) | yes | yes | Red-green loop at pre-agreed seams, with the repo's own runner. What a good test is, what to mock. |
 | [code-review](skills/code-review/SKILL.md) | yes | yes | Two parallel reviews of a diff (repo standards, spec fidelity); every finding cites file, line, hunk and is verified before it is reported. |
 | [pr](skills/pr/SKILL.md) | yes | yes | Fills the repo's PR template: smallest visual summary, before/after evidence, tests run, merge danger. |
