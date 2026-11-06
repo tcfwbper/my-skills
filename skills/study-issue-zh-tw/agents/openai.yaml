@@ -1,0 +1,5 @@
+interface:
+  display_name: "Study Issue (zh-TW)"
+  short_description: "Brief an issue in Traditional Chinese, terms in English"
+policy:
+  allow_implicit_invocation: false
