@@ -53,6 +53,10 @@ Keep `grill-me`, `to-spec`, and `to-tickets` in one context window. Start a fres
 - Personal scratch (specs, tickets, checklists) lives in `.scratch/`, excluded per clone with `.git/info/exclude`.
 - Everything published is plain Markdown: headings and lists, no bold labels, no emoji, ASCII.
 
+## Uninstall
+
+`./unlink.sh` removes this repo's skill symlinks from `~/.claude/skills` and `~/.agents/skills`. It only touches links that point into this repo.
+
 ## Maintaining this repo
 
 See `AGENTS.md`. Add a skill: create `skills/<name>/SKILL.md` and `skills/<name>/agents/openai.yaml`, add a row above, run `./link.sh`.
