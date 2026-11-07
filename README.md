@@ -23,12 +23,12 @@ Skills are invoked the same way in every harness: type `/<name>`, or let the age
 ## The flow
 
 ```
-/grill-me  ->  /to-spec  ->  /write-issue  ->  /implement (per sub-issue)  ->  /code-review-local  ->  push, PR
+/grill-me  ->  /to-spec  ->  /write-issue  ->  /implement (per sub-issue)  ->  /code-review  ->  push, PR
 /study-issue  ->  /diagnose (unknown cause)
-/code-review-pr   (someone else's PR)
+/code-review   (local changes or a PR)
 ```
 
-Start a fresh window for each `/implement`. `implement` calls `tdd` and `code-review-local` on its own.
+Start a fresh window for each `/implement`. `implement` calls `tdd` and `code-review` on its own.
 
 | Skill | You type it | Agent fires it | What it does |
 | --- | --- | --- | --- |
@@ -38,13 +38,11 @@ Start a fresh window for each `/implement`. `implement` calls `tdd` and `code-re
 | [write-issue](skills/write-issue/SKILL.md) | yes | | Splits a plan into tracer-bullet tickets and publishes them in the repo's own issue structure: one main issue for the plan, one sub-issue per ticket, blocking edges set. A single ticket is a single issue. |
 | [study-issue](skills/study-issue/SKILL.md) | yes | | Reads an issue, its thread, linked PRs, and the code it touches, then briefs you: problem, scale, approach, expected outcome, and status (Triage, In-progress, Done). |
 | [study-issue-zh-tw](skills/study-issue-zh-tw/SKILL.md) | yes | | Same as `study-issue`, with the brief written in Traditional Chinese and technical terms kept in English. |
-| [code-review-pr](skills/code-review-pr/SKILL.md) | yes | | Reviews a remote PR: studies its issue first, explains how the implementation solves it, grades risks (High, Medium, Low), and lists every point a human must confirm, including sound designs with equally good or better alternatives. Read-only. |
-| [code-review-pr-zh-tw](skills/code-review-pr-zh-tw/SKILL.md) | yes | | Same as `code-review-pr`, with the brief written in Traditional Chinese and technical terms kept in English. |
-| [code-review-local](skills/code-review-local/SKILL.md) | yes | yes | Reviews the local branch before pushing: the same brief as `code-review-pr` against the merge-base diff, plus the repo's documented standards and its own scoped checks. Edits nothing. |
-| [code-review-local-zh-tw](skills/code-review-local-zh-tw/SKILL.md) | yes | | Same as `code-review-local`, with the brief written in Traditional Chinese and technical terms kept in English. |
+| [code-review](skills/code-review/SKILL.md) | yes | yes | Reviews local changes or a PR after reading its issue and PR context. Four subagents cover correctness, boundaries, system invariants, and tests, each within six minutes. Reports verified risks as critical, high, medium, or low. Edits nothing. |
+| [code-review-zh-tw](skills/code-review-zh-tw/SKILL.md) | yes | | Same as `code-review`, with the report written in Traditional Chinese and technical terms kept in English. |
 | [diagnose](skills/diagnose/SKILL.md) | yes | yes | Unknown issues: locate, stand up a minimal environment, build a loop that goes red, minimise, prove one hypothesis, and report the root cause with a fix plan. Fixes only when asked. |
 | [diagnose-zh-tw](skills/diagnose-zh-tw/SKILL.md) | yes | | Same as `diagnose`, reporting in Traditional Chinese with technical terms kept in English. |
-| [implement](skills/implement/SKILL.md) | yes | | Builds one ticket: states the task contract, drives `tdd`, runs the repo's own test commands, runs `code-review-local`, commits with the repo's convention, reports evidence. |
+| [implement](skills/implement/SKILL.md) | yes | | Builds one ticket: states the task contract, drives `tdd`, runs the repo's own test commands, runs `code-review`, commits with the repo's convention, reports evidence. |
 | [tdd](skills/tdd/SKILL.md) | yes | yes | Red-green loop at seams taken from the issue (or confirmed with you), with the repo's own runner. What a good test is, what to mock. |
 | [handoff](skills/handoff/SKILL.md) | yes | | Compacts the session into a file another session can continue from, including the task contract and open checklist items. |
 | [writing-for-agents](skills/writing-for-agents/SKILL.md) | yes | yes | How to write skills and steering files: task statements, no reasoning steering, progressive disclosure. |

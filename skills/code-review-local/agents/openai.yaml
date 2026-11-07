@@ -1,3 +1,0 @@
-interface:
-  display_name: "Code Review Local"
-  short_description: "Review the local branch before pushing: issue fit, standards, graded risks, points to confirm"

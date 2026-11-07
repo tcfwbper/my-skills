@@ -27,7 +27,7 @@ Use the repo's own check commands, found in the nearest `AGENTS.md`, `CONTRIBUTI
 
 ## Close out
 
-Once done, call the Skill tool with "code-review-local" to review the work. Treat each finding as a claim: confirm it against the diff before acting. Fix the confirmed findings, and list the ones you rejected with the reason.
+Once done, call the Skill tool with "code-review" to review the work. Treat each finding as a claim: confirm it against the diff before acting. Fix the confirmed findings, and list the ones you rejected with the reason.
 
 Commit your work to the current branch using the repo's commit convention (Conventional Commits with a scope where `CONTRIBUTING.md` asks for it; `git commit -s` where the repo requires a DCO sign-off). Do not push unless asked.
 

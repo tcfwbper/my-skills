@@ -1,5 +1,0 @@
-interface:
-  display_name: "Code Review PR (zh-TW)"
-  short_description: "Review a remote PR in Traditional Chinese, terms in English"
-policy:
-  allow_implicit_invocation: false

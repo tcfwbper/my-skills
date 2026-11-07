@@ -1,5 +1,0 @@
-interface:
-  display_name: "Code Review PR"
-  short_description: "Review a remote PR: how it solves the issue, graded risks, points to confirm"
-policy:
-  allow_implicit_invocation: false

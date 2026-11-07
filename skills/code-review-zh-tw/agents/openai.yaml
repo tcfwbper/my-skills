@@ -1,0 +1,5 @@
+interface:
+  display_name: "Code Review (zh-TW)"
+  short_description: "Four-subagent code review in Traditional Chinese"
+policy:
+  allow_implicit_invocation: false
