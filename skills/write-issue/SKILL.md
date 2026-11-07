@@ -1,6 +1,6 @@
 ---
 name: write-issue
-description: "Turn a plan, spec, or the current conversation into GitHub issues: one main issue for the whole plan and one sub-issue per tracer-bullet ticket, written in the repo's own issue structure."
+description: "Turn a local spec or agreed plan into tickets and publish them to the repo's GitHub issue tracker."
 disable-model-invocation: true
 ---
 
@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Break a plan, spec, or conversation into **tickets**: tracer-bullet vertical slices, each declaring the tickets that **block** it. Publish them to the repo's GitHub tracker as one **main issue** (the whole plan) with one **sub-issue** per ticket.
 
-End state: the main issue exists on the tracker, every approved ticket is a sub-issue of it, blocking edges are set, and the main issue lists its sub-issues. Report every issue URL. Stop and report, publishing nothing, when there is no GitHub remote, the plan is a single ticket and its main issue already exists (say so explicitly), `gh` is not authenticated, or the user has not approved the breakdown.
+End state: the whole plan is covered by tracker issues, with a main issue and sub-issues for multiple tickets or one issue for a single ticket. Blocking edges are recorded, and a local ticket map records coverage and every issue URL. Stop before publishing when the tracker cannot be identified, `gh` is not authenticated, or unresolved decisions prevent a faithful breakdown. Report the specific blocker and keep the local drafts.
 
 ## Where things are published
 
@@ -20,7 +20,9 @@ Anything published is written for the tracker's readers: no internal hostnames, 
 
 ### 1. Gather context
 
-Work from whatever is already in the conversation. If the user passes a reference (a spec path, an issue number or URL) as an argument, fetch it and read its full body and comments.
+Use the local spec produced by `/to-spec` as the source of truth when available. Read the path the user supplies or the spec explicitly identified in this conversation in full. If neither is given, inspect `.scratch/` for a matching spec; ask which one only when the choice is ambiguous. An explicit agreed plan or conversation can also serve as input. For an issue reference, fetch its full body and comments.
+
+Carry forward all requirements, implementation steps, testing decisions, completion criteria, and out-of-scope boundaries. Resolve contradictions or scope-changing open questions with the user before publishing affected work. Keep the source spec intact; store drafts and the ticket map in `.scratch/<slug>/tickets.md`, beside the spec when it uses that directory. Ensure `.scratch/` is locally excluded via `.git/info/exclude`.
 
 ### 2. Explore the codebase (optional)
 
@@ -39,12 +41,12 @@ Record the result as one short template for the main issue and one for sub-issue
 
 ### 4. Find or plan the main issue
 
-Look on the remote tracker for an existing main issue for this work: the one the user passed, the spec issue this conversation produced, or an open issue whose title or body matches the plan (`gh issue list --repo <r> --state open --search "<keywords>"`). Treat a match as a candidate and confirm it with the user in step 6.
+Look on the remote tracker for an existing main issue for this work: the one the user passed, one recorded in the local ticket map, or an open issue whose title or body matches the plan (`gh issue list --repo <r> --state open --search "<keywords>"`). Read candidate issues to establish whether they cover this plan; ask the user only when the match is ambiguous. Reuse existing tickets that already cover planned work.
 
-- Existing main issue: tickets become its sub-issues. Never edit its title or body, except to add the sub-issue list when it lacks one and the user agrees.
+- Existing main issue with multiple tickets: tickets become its sub-issues. Preserve its title and body; obtain authorization for any body edit needed to add the ticket list or missing plan coverage.
 - No main issue: create one from the whole plan (problem, approach, scope, the ticket list), in the structure from step 3.
 - Only one ticket and no existing main issue: publish a single issue, no sub-issues. Its body carries the whole plan and the ticket's acceptance criteria.
-- Only one ticket and a main issue already exists: that ticket IS the main issue, not a sub-issue of it. Publish nothing. Tell the user plainly that the existing issue (give its URL) already covers the single ticket, and stop.
+- Only one ticket and a main issue already exists: use that issue as the ticket. Verify its body covers the whole plan and acceptance criteria. If it does, record its URL without creating a duplicate. If it does not, draft the missing content and obtain authorization to update the existing body.
 
 ### 5. Draft vertical slices
 
@@ -63,26 +65,25 @@ Give each ticket its **blocking edges**: the other tickets that must complete be
 
 **Wide refactors are the exception to vertical slicing.** A **wide refactor** is one mechanical change (rename a column, retype a shared symbol) whose **blast radius** fans across the whole codebase, so a single edit breaks thousands of call sites at once and no vertical slice can land green. Don't force it into a tracer bullet; sequence it as **expand-contract**. First expand: add the new form beside the old so nothing breaks. Then migrate the call sites over in batches sized by blast radius (per package, per directory), each batch its own ticket blocked by the expand, keeping CI green batch to batch because the old form still exists. Finally contract: delete the old form once no caller remains, in a ticket blocked by every migrate batch. When even the batches can't stay green alone, keep the sequence but let them share an integration branch that all block a final integrate-and-verify ticket; green is promised only there.
 
-### 6. Quiz the user
+### 6. Check coverage and present the breakdown
 
 Present the plan in one message:
 
 - The structure source from step 3.
-- The main issue: the existing one found, or the title of the one to create, or "single issue, no main issue". For a single ticket with an existing main issue, say that nothing will be published and stop here.
+- The main issue: the existing one found, or the title of the one to create, or "single issue, no sub-issues".
 - A numbered ticket list. For each ticket: title, blocked by, and what it delivers (the end-to-end behaviour it makes work).
 
-Ask the user:
+In `tickets.md`, map every requirement, implementation step, and completion criterion from the source plan to the ticket that covers it. Draft the full issue bodies before publishing. Each ticket must be usable in a fresh implementation session: carry the relevant decisions, test seams, and acceptance criteria into its body, since tracker readers cannot access a local spec path. Verify that dependencies have no cycles and only represent actual prerequisites.
 
-- Is the main issue right (existing one confirmed, or create a new one)?
-- Does the granularity feel right (too coarse / too fine)?
-- Does each ticket depend only on tickets that genuinely gate it?
-- Should any tickets be merged or split further?
-
-Iterate until the user approves the breakdown. Publish nothing before that.
+Invoking this skill authorizes creating the tickets for the agreed plan. Present the breakdown and proceed to publication unless the user requested draft-only work or a review before publishing. Ask only for an unresolved scope decision, an ambiguous existing issue, or an existing-body edit requiring authorization. Do not add a separate approval round for a straightforward breakdown.
 
 ### 7. Publish
 
 Publish in dependency order (blockers first), so every reference points at a real issue number.
+
+Confirm the target repository from its remotes and pass it explicitly to every `gh` command. Record each issue URL in `tickets.md` immediately after creation. On a partial failure, inspect the tracker and resume the missing work rather than recreating successful issues.
+
+For a single ticket, create or reuse just one issue carrying the whole plan and acceptance criteria, then proceed to verification in step 6 below. Parent links and sub-issues apply only to multiple tickets. Reuse issues already verified in step 4 instead of creating them again. When a fallback requires editing a reused issue body, obtain authorization for that edit first.
 
 1. Main issue, when one is to be created: `gh issue create --repo <r> --title ... --body-file ...`. Write bodies to a file under the scratchpad or `.scratch/` rather than inline.
 2. Each ticket as an issue in the structure from step 3, with `Part of #<main>` where the structure has no parent field.
@@ -100,7 +101,7 @@ Publish in dependency order (blockers first), so every reference points at a rea
    ```
 
 5. If either API is unavailable (404, a server without the feature), fall back in the body: add a task list of `- [ ] #<n>` lines to the main issue, `Part of #<main>` to each ticket, and a "Blocked by" list of issue references to each ticket. Say in the report which fallback was used.
-6. Verify: `gh issue view <main> --repo <r> --json subIssues` lists every ticket. Fix gaps before reporting.
+6. Verify the created or reused issues and their coverage against `tickets.md`. When native links were used, read back the sub-issue list and blocking edges through `gh api`; when body references were used, read back those bodies instead. For a single issue, verify its body covers the whole plan. Fix gaps before reporting every issue URL and the local ticket map path. If a failure prevents completion, report the issues already created and the work still missing.
 
 Do NOT close, relabel, or retitle an existing main issue or any issue not created in this run.
 
@@ -140,6 +141,10 @@ The end-to-end behaviour this ticket makes work, from the user's perspective, no
 
 - [ ] Criterion 1
 - [ ] Criterion 2
+
+## Implementation and testing decisions
+
+The relevant agreed module interfaces, constraints, test seams, and verification steps from the spec. Include enough context to implement this ticket independently of the local conversation.
 
 ## Blocked by
 

@@ -1,5 +1,5 @@
 interface:
   display_name: "Write Issue"
-  short_description: "Turn a plan into a main issue and sub-issues"
+  short_description: "Split a local spec into tickets and publish to GitHub"
 policy:
   allow_implicit_invocation: false

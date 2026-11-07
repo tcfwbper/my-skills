@@ -1,16 +1,18 @@
 ---
 name: to-spec
-description: "Turn the current conversation into a spec and publish it to the project issue tracker: no interview, just synthesis of what you've already discussed."
+description: "Turn the current conversation into a local spec recording the agreed decisions and implementation plan."
 disable-model-invocation: true
 ---
 
 This skill takes the current conversation context and codebase understanding and produces a spec. Do NOT interview the user; just synthesize what you already know.
 
-## Where things are published
+## Where the spec is saved
 
-Default: GitHub Issues through the `gh` CLI, in the repo `git remote -v` points at. On a fork (an `upstream` remote beside `origin`) the tracker is the upstream repo: pass `--repo <owner>/<repo>` or run `gh repo set-default` once. When the user says "local", or there is no GitHub remote, write Markdown files under `.scratch/<slug>/` instead; add `.scratch/` to `.git/info/exclude` if it is not ignored yet, so nothing personal lands in the shared repo.
+Always write the spec locally to `.scratch/<slug>/spec.md`. Add `.scratch/` to `.git/info/exclude` if it is not ignored yet, so nothing personal lands in the shared repo. When the user provides a local output path, use that instead. Reuse the same spec when revising the same plan; preserve unrelated specs.
 
-Anything published is written for the tracker's readers: the repo's documented prose style (plain Markdown, headings and lists, no bold labels, no emoji, ASCII punctuation is the safe default), no internal hostnames, private ticket IDs, or debugging trails they cannot follow.
+The spec records the decisions already made during `grill-me` or the current discussion, including their rationale and rejected alternatives where discussed. Record unresolved points explicitly rather than inventing decisions. Use plain Markdown: headings and lists, no bold labels, no emoji, ASCII punctuation.
+
+This skill always writes a local spec file. Never create or modify tracker issues, publish the spec remotely, or invoke a publishing workflow from this skill. This applies even when the repo has an issue tracker configured. Publishing tickets belongs to `/write-issue`, which the user invokes separately with the spec path. No issue tracker or authentication is needed here.
 
 ## Process
 
@@ -18,9 +20,9 @@ Anything published is written for the tracker's readers: the repo's documented p
 
 2. Sketch out the seams at which you're going to test the feature. Existing seams should be preferred to new ones. Use the highest seam possible. If new seams are needed, propose them at the highest point you can. The fewer seams across the codebase, the better - the ideal number is one.
 
-Check with the user that these seams match their expectations.
+Reuse seams already agreed during the discussion. If they have not been agreed, check with the user that the proposed seams match their expectations.
 
-3. Write the spec using the template below, then publish it: a GitHub issue, or `.scratch/<slug>/spec.md` locally (see above). Report the issue URL or path.
+3. Write the spec using the template below. Capture the whole agreed scope and an ordered implementation plan that a fresh session can use without rereading the conversation. Verify that every agreed requirement and decision is represented. Report the local path and any unresolved points. Stop after saving the spec; do not create tickets or start implementation.
 
 <spec-template>
 
@@ -60,6 +62,10 @@ Do NOT include specific file paths or code snippets. They may end up being outda
 
 Exception: if a prototype produced a snippet that encodes a decision more precisely than prose can (state machine, reducer, schema, type shape), inline it within the relevant decision and note briefly that it came from a prototype. Trim to the decision-rich parts, not a working demo, just the important bits.
 
+## Implementation Plan
+
+An ordered checklist of the work needed to deliver the agreed solution. For each step, record what it delivers, prerequisites, and how completion can be verified. Include agreed migration, rollout, or cleanup work when applicable. This is the execution plan for the whole spec; ticket boundaries are decided by `/write-issue`.
+
 ## Testing Decisions
 
 A list of testing decisions that were made. Include:
@@ -70,7 +76,7 @@ A list of testing decisions that were made. Include:
 
 ## Done When
 
-The checkable end state `implement` works toward, as a short list: which user stories are live, what old behaviour or code is removed, which test commands are green, and anything that must be true in the tracker (tickets closed, PR open). This is the contract a build session restates before it starts.
+The checkable end state `implement` works toward, as a short list: which user stories are live, what old behaviour or code is removed, which test commands are green, and any agreed rollout requirements. This is the contract a build session restates before it starts.
 
 ## Out of Scope
 
@@ -78,6 +84,6 @@ A description of the things that are out of scope for this spec.
 
 ## Further Notes
 
-Any further notes about the feature.
+Any further notes about the feature, including unresolved points and assumptions that still need confirmation. Keep these separate from agreed decisions.
 
 </spec-template>
