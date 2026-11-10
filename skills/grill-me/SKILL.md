@@ -34,6 +34,8 @@ Use the project's existing terminology (from its `AGENTS.md`, docs, and code) ra
 
 At the start, call the Skill tool with "code-quality" to load its rubric. Every question that offers options gives, for each option, the rubric categories it strains and the cost a future reader or operator pays, or one line saying it strains none. The recommendation weighs that cost alongside delivery cost.
 
+Before settling a design that changes a shared file, trace its consumers to identify other affected features, including those outside the requested work. For each feature, establish the behavior to preserve and how to verify it before and after the change. This applies to shared code, configuration, and test files. Resolve compatibility decisions with the user and carry the affected features and regression checks into the agreed plan. This branch is settled when every affected feature has a preservation check or an explicit verification gap.
+
 ## Quality sweep
 
 Before declaring the frontier empty, sweep the whole agreed design. Each item below produces numbered questions for the next round or the one line `<item>: nothing unclear`.
