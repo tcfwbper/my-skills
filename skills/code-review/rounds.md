@@ -1,8 +1,6 @@
-# Re-review and publish
+# Re-review
 
-Both modes come from a caller running a review loop, such as `implement`.
-
-## Re-review
+This mode comes from a caller running a review loop, such as `implement`.
 
 The caller passes the round number, the previous round's findings with the action taken on each (fixed, rejected with reason, left open), and the base of the fix diff: the revision the previous round reviewed.
 
@@ -11,7 +9,3 @@ The caller passes the round number, the previous round's findings with the actio
 - Deadline: the parent sets one deadline for the round from the fix diff: up to 3 minutes for a small local fix, up to 5 for fixes across several functions or files, the full 8 for fixes that change a flow or an interface.
 - Each reviewer's report adds, for every previous finding in its lens: fixed, not fixed, or fixed with a new problem, with evidence.
 - The report fills the "Previous findings" section.
-
-## Publish
-
-The caller asks to publish a review already produced in this conversation. When its target, base, head, and working-tree state still match the current code, skip preparation and dispatch, and publish that report as described in [`crit.md`](crit.md). Otherwise run a re-review of what changed since that review, then publish its result.
