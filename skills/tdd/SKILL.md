@@ -30,10 +30,11 @@ When the shape of that interface is itself in question, prefer the deeper module
 - **Implementation-coupled**: mocks internal collaborators, tests private methods, or verifies through a side channel (querying the database instead of using the interface). The tell: the test breaks when you refactor but behavior hasn't changed.
 - **Tautological**: the assertion recomputes the expected value the way the code does (`expect(add(a, b)).toBe(a + b)`, a snapshot derived by hand the same way, a constant asserted equal to itself), so it passes by construction and can never disagree with the code. Expected values must come from an independent source of truth: a known-good literal, a worked example, the spec.
 - **Pin-coupled**: the assertion hard-codes a value that is really configuration (an image tag, a chart version, a dependency pin), so every unrelated pin bump breaks the test and the diff hides the real change. Unless that literal is the behaviour under test, read the expected value from its source of truth at test time, or delete the assertion.
+- **Real-artifact coupled** and **scattered special cases**: see the `code-quality` rubric, categories Fixtures over real artifacts and Single source of truth for rules.
 - **Horizontal slicing**: writing all tests first, then all implementation. Bulk tests verify _imagined_ behavior: you test the _shape_ of things rather than user-facing behavior, the tests go insensitive to real changes, and you commit to test structure before understanding the implementation. Work in **vertical slices** instead: one test → one implementation → repeat, each test a **tracer bullet** that responds to what the last cycle taught you.
 
 ## Rules of the loop
 
 - **Red before green.** Write the failing test first, then only enough code to pass it. Don't anticipate future tests or add speculative features.
 - **One slice at a time.** One seam, one test, one minimal implementation per cycle.
-- **Refactoring is not part of the loop.** It belongs to the review stage (see the `code-review` skill), not the red → green implementation cycle.
+- **Refactor only on green.** After a slice goes green and before the next red, bring the slice up to the `code-quality` rubric; the tests stay green throughout. Deeper restructuring found later belongs to the review loop.

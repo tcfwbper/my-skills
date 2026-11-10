@@ -1,0 +1,5 @@
+interface:
+  display_name: "Implement (zh-TW)"
+  short_description: "Build work from a spec or tickets, reporting in Traditional Chinese"
+policy:
+  allow_implicit_invocation: false

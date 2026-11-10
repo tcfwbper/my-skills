@@ -22,7 +22,7 @@ Q2 - <question title>: <question body>
 Recommended: <your recommended answer>
 ```
 
-Word each question so "yes" accepts your recommended answer.
+Word each question so "yes" accepts your recommended answer. When the facts do not settle a recommendation, write `Recommended: none` followed by the analysis and the fact or preference that would decide it.
 
 Each round the user answers reshapes the tree: settled decisions push the frontier outward and unblock questions that depended on them. Recompute the frontier and ask the next round. A question whose answer depends on another question still open in this round belongs to a _later_ round, not this one.
 
@@ -30,4 +30,17 @@ Finding _facts_ is your job, never the user's. When a frontier question needs a 
 
 Use the project's existing terminology (from its `AGENTS.md`, docs, and code) rather than inventing names. When the user's wording and the code disagree, say so and ask which is right.
 
-The session is done when the frontier is empty: every branch of the design tree visited, nothing left silently assumed. Do not act on it until the user confirms you have reached a shared understanding. The natural next step is `/to-spec`.
+## Quality impact
+
+At the start, call the Skill tool with "code-quality" to load its rubric. Every question that offers options gives, for each option, the rubric categories it strains and the cost a future reader or operator pays, or one line saying it strains none. The recommendation weighs that cost alongside delivery cost.
+
+## Quality sweep
+
+Before declaring the frontier empty, sweep the whole agreed design. Each item below produces numbered questions for the next round or the one line `<item>: nothing unclear`.
+
+1. Existing mechanisms: wherever the work could build on an existing mechanism, inspect it for weaknesses (fragile mappings, single-case assumptions, missing validation) and put the choice to the user: reuse as is, reuse now and migrate later with the follow-up recorded, or replace first and migrate existing users. Give each path's cost and risk, and recommend from the evidence.
+2. Each `code-quality` category the design decides, asked as that decision: which external access the work needs and whether a hermetic path exists, which failures stop the run and who sees a downgraded one, which new mechanism serves which requirement, which constraints the code must explain, and which fixtures and rule homes the tests use.
+
+## Done
+
+The session is done when the frontier is empty and the quality sweep has run: every branch of the design tree visited, every sweep item answered, nothing left silently assumed. Do not act on it until the user confirms you have reached a shared understanding. The natural next step is `/to-spec`.

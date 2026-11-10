@@ -22,7 +22,7 @@ This skill always writes a local spec file. Never create or modify tracker issue
 
 Reuse seams already agreed during the discussion. If they have not been agreed, check with the user that the proposed seams match their expectations.
 
-3. Write the spec using the template below. Capture the whole agreed scope and an ordered implementation plan that a fresh session can use without rereading the conversation. Verify that every agreed requirement and decision is represented. Report the local path and any unresolved points. Stop after saving the spec; do not create tickets or start implementation.
+3. Write the spec using the template below. Capture the whole agreed scope and an ordered implementation plan that a fresh session can use without rereading the conversation. Verify that every agreed requirement and decision is represented, including every quality-sweep answer from `grill-me`. A section with nothing to record says `None` with one line of reason rather than being dropped. Report the local path and any unresolved points. Stop after saving the spec; do not create tickets or start implementation.
 
 <spec-template>
 
@@ -36,15 +36,17 @@ The solution to the problem, from the user's perspective.
 
 ## User Stories
 
-A LONG, numbered list of user stories. Each user story should be in the format of:
+Optional. A short numbered list, only when the change has distinct actors or user-facing flows worth naming:
 
 1. As an <actor>, I want a <feature>, so that <benefit>
 
-<user-story-example>
-1. As a mobile bank customer, I want to see balance on my accounts, so that I can make better informed decisions about my spending
-</user-story-example>
+## Boundaries
 
-This list of user stories should be extremely extensive and cover all aspects of the feature.
+For each component the work adds or changes:
+
+- Owns: <behaviour or resource this component is responsible for>
+- Delegates: <behaviour handed to another component, and to which>
+- Must not: <behaviour this component must leave to others>
 
 ## Implementation Decisions
 
@@ -62,21 +64,36 @@ Do NOT include specific file paths or code snippets. They may end up being outda
 
 Exception: if a prototype produced a snippet that encodes a decision more precisely than prose can (state machine, reducer, schema, type shape), inline it within the relevant decision and note briefly that it came from a prototype. Trim to the decision-rich parts, not a working demo, just the important bits.
 
+## Existing Mechanisms
+
+Each existing mechanism the work builds on or replaces: the decision (reuse as is, reuse now and migrate later, replace first), its known weaknesses, the reason for the decision, and any follow-up migration. A follow-up migration is also listed in the Implementation Plan as its own step marked follow-up, so `/write-issue` publishes it as a ticket.
+
+## External Dependencies
+
+Each network resource, registry, remote artifact, or service reached at build, test, or CI time. For each: the hermetic alternative chosen, or why external access is accepted (the system assumption it follows) and how its failure shows.
+
+## Failure Handling
+
+Each failure mode the change introduces: what detects it, whether it stops the run or is deliberately downgraded, the reason for any downgrade, and where a human sees it.
+
+## Known Constraints
+
+Limits, workarounds, exclusions, and tech debt the code will carry, each with the reason the code must state in a comment and the condition under which it can be removed.
+
 ## Implementation Plan
 
 An ordered checklist of the work needed to deliver the agreed solution. For each step, record what it delivers, prerequisites, and how completion can be verified. Include agreed migration, rollout, or cleanup work when applicable. This is the execution plan for the whole spec; ticket boundaries are decided by `/write-issue`.
 
 ## Testing Decisions
 
-A list of testing decisions that were made. Include:
-
-- A description of what makes a good test (only test external behavior, not implementation details)
-- Which modules will be tested
-- Prior art for the tests (i.e. similar types of tests in the codebase)
+- The seams under test, each with what it catches and what it misses
+- The test data: fixtures built for the tests, and any real artifact read on purpose with the reason
+- Where shared rules and exceptions live, so tests consult one home instead of restating them
+- Prior art for the tests (similar tests in the codebase)
 
 ## Done When
 
-The checkable end state `implement` works toward, as a short list: which user stories are live, what old behaviour or code is removed, which test commands are green, and any agreed rollout requirements. This is the contract a build session restates before it starts.
+The checkable end state `implement` works toward, as a short list: which behaviour is live, what old behaviour or code is removed, which test commands are green, and any agreed rollout requirements. This is the contract a build session restates before it starts.
 
 ## Out of Scope
 

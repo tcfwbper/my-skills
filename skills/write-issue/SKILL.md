@@ -22,7 +22,7 @@ Anything published is written for the tracker's readers: no internal hostnames, 
 
 Use the local spec produced by `/to-spec` as the source of truth when available. Read the path the user supplies or the spec explicitly identified in this conversation in full. If neither is given, inspect `.scratch/` for a matching spec; ask which one only when the choice is ambiguous. An explicit agreed plan or conversation can also serve as input. For an issue reference, fetch its full body and comments.
 
-Carry forward all requirements, implementation steps, testing decisions, completion criteria, and out-of-scope boundaries. Resolve contradictions or scope-changing open questions with the user before publishing affected work. Keep the source spec intact; store drafts and the ticket map in `.scratch/<slug>/tickets.md`, beside the spec when it uses that directory. Ensure `.scratch/` is locally excluded via `.git/info/exclude`.
+Carry forward every section of the source plan: requirements, decisions, implementation steps, testing decisions, completion criteria, and out-of-scope boundaries. A step the plan marks follow-up becomes its own ticket. Resolve contradictions or scope-changing open questions with the user before publishing affected work. Keep the source spec intact; store drafts and the ticket map in `.scratch/<slug>/tickets.md`, beside the spec when it uses that directory. Ensure `.scratch/` is locally excluded via `.git/info/exclude`.
 
 ### 2. Explore the codebase (optional)
 
@@ -144,7 +144,7 @@ The end-to-end behaviour this ticket makes work, from the user's perspective, no
 
 ## Implementation and testing decisions
 
-The relevant agreed module interfaces, constraints, test seams, and verification steps from the spec. Include enough context to implement this ticket independently of the local conversation.
+The decisions from every spec section that bear on this ticket, including test seams and verification steps. Include enough context to implement this ticket independently of the local conversation.
 
 ## Blocked by
 

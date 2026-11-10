@@ -1,0 +1,3 @@
+interface:
+  display_name: "Code Quality"
+  short_description: "Shared rubric for planning, building, and reviewing code quality"
