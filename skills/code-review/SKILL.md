@@ -3,9 +3,9 @@ name: code-review
 description: "Review code changes against their issue and PR, grade the risks, and give a human review order. Use when the user asks to review a branch, local diff, or PR, or when an implementation finishes and needs review."
 ---
 
-Review the change, report confirmed findings grouped by risk, and give the human a review order. Read code and run bounded checks; edit no project files, commit nothing, push nothing, and post no remote comments. When another skill calls this skill, that caller decides which findings to fix.
+Review the change, report confirmed findings grouped by risk, and give the human a review order with inline reading notes in Crit. Read code and run bounded checks; edit no project files, commit nothing, push nothing, and post no remote comments. Crit reading notes are the permitted review annotation output. When another skill calls this skill, that caller decides which findings to fix.
 
-End state: the issue and PR context is understood, all five review assignments have a result or an explicit coverage gap, every reported finding is verified against the reviewed revision, and the human review order accounts for every changed file. Stop and report when the target or base cannot be resolved, the code cannot be read, or there is no change to review. Report unavailable context as a limitation rather than inventing requirements.
+End state: the issue and PR context is understood, all five review assignments have a result or an explicit coverage gap, every reported finding is verified against the reviewed revision, the human review order accounts for every changed file, and Crit reading notes are published or their delivery gaps reported. Stop and report when the target or base cannot be resolved, the code cannot be read, or there is no change to review. Report unavailable context as a limitation rather than inventing requirements.
 
 ## Modes
 
@@ -79,6 +79,10 @@ Give each stop a review priority, separate from finding grades:
 
 For each stop, state what to verify in one or two sentences and which findings sit there. For a Low stop, one sentence on what to skim.
 
+## Crit reading notes
+
+After consolidating the review and planning the human review order, publish inline notes through Crit. Read [`crit-notes.md`](crit-notes.md) for scope, note format, anchors, and delivery checks. The parent reviewer owns these notes so subagent results become one consistent reading route.
+
 ## Report
 
 Write the full report in chat in the user's language. Use plain Markdown and cite sources inline. Give each finding in full.
@@ -89,6 +93,7 @@ Write the full report in chat in the user's language. Use plain Markdown and cit
 Scope: <base and head SHAs, local working-tree state, mode and round>
 Checks: <commands and results; CI state; skips and reasons>
 Review coverage: <each subagent: complete | partial; timeout or other gaps>
+Crit notes: <published count; delivery gaps and reasons>
 
 ## Human review order
 1. <High|Medium|Low> <file:symbol or lines> - <what to verify> - <findings here>
