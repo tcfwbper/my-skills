@@ -24,6 +24,7 @@ Skills are invoked the same way in every harness: type `/<name>`, or let the age
 
 ```
 /grill-me  ->  /to-spec  ->  /write-issue  ->  /implement (per sub-issue)  ->  /code-review  ->  push, PR
+/grill-me  ->  /write-por <Google Doc link>
 /study-issue  ->  /diagnose (unknown cause)
 /code-review   (local changes or a PR)
 ```
@@ -34,6 +35,7 @@ Skills are invoked the same way in every harness: type `/<name>`, or let the age
 | --- | --- | --- | --- |
 | [grill-me](skills/grill-me/SKILL.md) | yes | | Interviews you in rounds over a design tree until every decision is settled, with a recommended answer (or an honest analysis) for each question and the code-quality impact of each option. Ends with a quality sweep: existing mechanisms, external dependencies, failure visibility, scope, constraints, test data. Writes nothing. |
 | [grill-me-zh-tw](skills/grill-me-zh-tw/SKILL.md) | yes | | Same as `grill-me`, with the interview in Traditional Chinese and technical terms kept in English. |
+| [write-por](skills/write-por/SKILL.md) | yes | | Writes the discussion's agreed design to a supplied Google Doc: a narrative overview, problem and scope, solution architecture and flows, rationale, and relevant risks and open questions. Calls `draw-architecture-diagram` when an architecture diagram helps. Preserves unrelated content and verifies the written document. |
 | [to-spec](skills/to-spec/SKILL.md) | yes | | Records the discussion's decisions and implementation plan in a local `.scratch/<slug>/spec.md`: boundaries, existing-mechanism decisions, external dependencies, failure handling, known constraints, test seams and data, done-when. Creates no tracker issues. |
 | [write-issue](skills/write-issue/SKILL.md) | yes | | Reads the local spec or agreed plan, maps its full scope to tickets, and publishes them in the repo's own issue structure: one main issue with sub-issues and blockers, or one issue for a single ticket. Records issue URLs locally. |
 | [study-issue](skills/study-issue/SKILL.md) | yes | | Reads an issue, its thread, linked PRs, and the code it touches, then briefs you: problem, scale, approach, expected outcome, and status (Triage, In-progress, Done). |
@@ -46,6 +48,7 @@ Skills are invoked the same way in every harness: type `/<name>`, or let the age
 | [implement](skills/implement/SKILL.md) | yes | | Builds one ticket: states the task contract, drives `tdd` with a `code-quality` refactor on each green slice, runs the repo's own test commands, loops `code-review` and fixes for up to three rounds until no critical, high, or medium finding remains and low findings are fixed wherever feasible within scope, commits with the repo's convention, reports evidence. |
 | [implement-zh-tw](skills/implement-zh-tw/SKILL.md) | yes | | Same as `implement`, with the contract, progress, and review reports in Traditional Chinese and technical terms kept in English. Code, comments, and commits follow the repo. |
 | [tdd](skills/tdd/SKILL.md) | yes | yes | Red-green loop at seams taken from the issue (or confirmed with you), with the repo's own runner. What a good test is, what to mock. |
+| [draw-architecture-diagram](skills/draw-architecture-diagram/SKILL.md) | yes | yes | Draws or revises architecture SVGs with consistent layout, icons, and connector routing; renders light and dark presentation PNGs and checks text fit. |
 | [handoff](skills/handoff/SKILL.md) | yes | | Compacts the session into a file another session can continue from, including the task contract and open checklist items. |
 | [writing-for-agents](skills/writing-for-agents/SKILL.md) | yes | yes | How to write skills and steering files: task statements, no reasoning steering, progressive disclosure. |
 

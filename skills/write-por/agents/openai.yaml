@@ -1,0 +1,5 @@
+interface:
+  display_name: "Write POR"
+  short_description: "Write a POR in Google Docs from agreed design decisions"
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,3 @@
+interface:
+  display_name: "Draw Architecture Diagram"
+  short_description: "Draw editable architecture SVGs and checked PNG exports"
