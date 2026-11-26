@@ -21,9 +21,13 @@ Steps that need no decision from the user are done without asking. Report progre
 
 ## Build
 
-Call the Skill tool with "code-quality" once before the first slice, and keep its rubric as the bar for every slice. Each known constraint in the spec or ticket gets its explaining comment where the code encodes it.
+For backports, identify the source revision and treat its code quality as already accepted. Port its logic and coding style faithfully, making only the minimal adaptations required for target-branch compatibility; do not rewrite logic or refactor the ported code. Apply the `code-quality` rubric only to those compatibility adaptations. This scope governs the build and review loop below.
 
-Call the Skill tool with "tdd" where possible, at pre-agreed seams. After each slice goes green, check the slice against every rubric category and refactor what falls short while the tests stay green, before starting the next slice.
+For backports, preserve the target branch's release settings by default, including image repository, tag, digest, chart version, and `appVersion`. Change them only when the user requests it or the repo's backport/release rules explicitly require it. A change to these values in the source commit is not sufficient justification to apply the same change to the target branch.
+
+Call the Skill tool with "code-quality" once before the first slice, and keep its rubric as the bar for every slice within the scope above. Each known constraint in the spec or ticket gets its explaining comment where the code encodes it within that scope.
+
+Call the Skill tool with "tdd" where possible, at pre-agreed seams. After each slice goes green, check the applicable code against every rubric category and refactor what falls short within the scope above while the tests stay green, before starting the next slice.
 
 Use the repo's own check commands, found in the nearest `AGENTS.md`, `CONTRIBUTING.md`, or build config, rather than guessing a runner: the scoped test target for the packages you touched regularly (for example `bazel test //path/to/pkg/... --test_output=streamed`, `go test ./...`, `pnpm test <file>`), typechecking and lint regularly, and the full suite once at the end. Where the nearest `AGENTS.md` requires an extra test kind for the area (a behaviour suite, a contract test), that kind is part of the end state.
 
