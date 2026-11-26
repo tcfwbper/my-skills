@@ -1,5 +1,5 @@
 interface:
   display_name: "Write POR"
-  short_description: "Write a POR in Google Docs from agreed design decisions"
+  short_description: "Draft a POR for review and write it to Google Docs on approval"
 policy:
   allow_implicit_invocation: false
